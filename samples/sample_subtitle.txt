@@ -1,0 +1,35 @@
+00:00 Hello everyone, welcome back to the channel.
+
+00:04 Today we have a very special guest with us.
+
+
+00:08 Please welcome Nick!
+
+00:12 Thanks for having me. It's great to be here.
+
+00:16 So Nick, tell us about your latest project.
+
+00:20 Well, we've been working on something really exciting.
+It's a new approach to subtitle processing.
+
+00:24 That sounds amazing. Can you walk us through the details?
+
+00:28 Sure! The basic idea is to take raw subtitles
+and turn them into readable dialogue scripts.
+
+00:32 With proper speaker attribution?
+
+00:36 Exactly. We use AI to identify who is speaking
+in each part of the conversation.
+
+00:40 That's really innovative. How accurate is it?
+
+00:44 It's getting better every day. We're still iterating
+on the prompt design and the chunking strategy.
+
+00:48 Well, we're out of time for today.
+Thanks for joining us, Nick!
+
+00:52 Thank you for having me. It was a pleasure.
+
+00:56 See you all next time!
