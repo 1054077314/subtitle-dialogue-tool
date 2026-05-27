@@ -108,3 +108,37 @@
 - 不做多人协作。
 - 不做复杂权限。
 - 不做自动发布。
+
+## 9. UI 输入输出说明
+
+### 输入方式
+
+1. **粘贴文本**：直接在输入框粘贴字幕内容。
+2. **导入文件**：点击"选择 txt 文件"，选择 .txt 文件后内容自动填入输入框。
+
+### 可调参数
+
+- **max_chunk_size**：每块最大字符数，默认 8000。值越小分块越多。
+- **context_size**：前后重叠上下文字符数，默认 500。必须小于 max_chunk_size / 2。
+
+### 处理流程
+
+点击"开始处理"后，UI 调用现有模块完成：
+
+```text
+clean_subtitle → split_subtitle_forced → mock_analyze_chunk → normalize_speakers → export_markdown
+```
+
+### 输出
+
+- **界面展示**：Markdown 结果直接显示在输出区。
+- **文件保存**：点击"保存为 output.md"，选择位置导出 .md 文件。
+
+### 操作按钮
+
+| 按钮 | 功能 |
+|------|------|
+| 选择 txt 文件 | 导入 .txt 字幕文件到输入框 |
+| 清空 | 清空输入框和输出框 |
+| 开始处理 | 运行完整 mock pipeline |
+| 保存为 output.md | 将 Markdown 结果保存到文件 |

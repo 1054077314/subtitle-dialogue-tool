@@ -11,6 +11,7 @@
 | Task 5 | 完成 | 人物统一（speaker_normalizer，全局 speaker_map + id 映射） |
 | Task 6 | 完成 | Markdown 导出（markdown_exporter，标题 + 人物表 + 正文对话） |
 | Task 7 | 完成 | 简单 tkinter UI（ui_tkinter.py） |
+| Phase 2 | 完成 | UI 完善：清空按钮、分块参数输入、UI 使用文档 |
 
 ## 2. 运行命令
 

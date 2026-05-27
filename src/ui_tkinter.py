@@ -24,10 +24,22 @@ class App:
         self.input_box = scrolledtext.ScrolledText(root, height=12)
         self.input_box.pack(fill="both", expand=True, padx=8, pady=4)
 
+        # 参数区
+        param_frame = tk.Frame(root)
+        param_frame.pack(fill="x", padx=8, pady=2)
+        tk.Label(param_frame, text="max_chunk_size:").pack(side="left")
+        self.max_chunk_var = tk.StringVar(value="8000")
+        tk.Entry(param_frame, textvariable=self.max_chunk_var, width=8).pack(side="left", padx=(2, 12))
+        tk.Label(param_frame, text="context_size:").pack(side="left")
+        self.context_var = tk.StringVar(value="500")
+        tk.Entry(param_frame, textvariable=self.context_var, width=8).pack(side="left", padx=(2, 12))
+        tk.Button(param_frame, text="清空", command=self.clear).pack(side="left", padx=(8, 0))
+
         # 按钮区
         btn_frame = tk.Frame(root)
         btn_frame.pack(fill="x", padx=8, pady=4)
-        tk.Button(btn_frame, text="开始处理", command=self.process).pack(side="left")
+        tk.Button(btn_frame, text="选择 txt 文件", command=self.open_file).pack(side="left")
+        tk.Button(btn_frame, text="开始处理", command=self.process).pack(side="left", padx=(8, 0))
         tk.Button(btn_frame, text="保存为 output.md", command=self.save).pack(side="left", padx=(8, 0))
 
         self.status_label = tk.Label(btn_frame, text="", fg="gray")
@@ -40,6 +52,22 @@ class App:
 
         self.last_markdown = ""
 
+    def open_file(self):
+        path = filedialog.askopenfilename(filetypes=[("文本文件", "*.txt")])
+        if not path:
+            return
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+        self.input_box.delete("1.0", "end")
+        self.input_box.insert("1.0", content)
+        self.status_label.config(text=f"已加载 {os.path.basename(path)}")
+
+    def clear(self):
+        self.input_box.delete("1.0", "end")
+        self.output_box.delete("1.0", "end")
+        self.last_markdown = ""
+        self.status_label.config(text="已清空")
+
     def process(self):
         raw = self.input_box.get("1.0", "end").strip()
         if not raw:
@@ -47,8 +75,15 @@ class App:
             return
 
         try:
+            max_chunk_size = int(self.max_chunk_var.get())
+            context_size = int(self.context_var.get())
+        except ValueError:
+            messagebox.showwarning("提示", "分块参数必须为整数")
+            return
+
+        try:
             cleaned = clean_subtitle(raw)
-            chunks = split_subtitle_forced(cleaned)
+            chunks = split_subtitle_forced(cleaned, max_chunk_size=max_chunk_size, context_size=context_size)
             results = [mock_analyze_chunk(c) for c in chunks]
             normalized = normalize_speakers(results)
             md = export_markdown(normalized)
